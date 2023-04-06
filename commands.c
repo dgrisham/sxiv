@@ -332,6 +332,25 @@ bool ci_scroll_to_edge(arg_t dir)
 	return img_pan_edge(&img, dir);
 }
 
+
+bool ci_navigate_and_scroll_to_top(arg_t n)
+{
+	if (prefix > 0)
+		n *= prefix;
+	n += fileidx;
+	if (n < 0)
+		n = 0;
+	if (n >= filecnt)
+		n = filecnt - 1;
+
+	if (n != fileidx) {
+		load_image(n);
+        ci_scroll_to_edge(DIR_UP);
+		return true;
+	} else {
+		return false;
+	}
+}
 bool ci_drag(arg_t mode)
 {
 	int x, y, ox, oy;
